@@ -34,7 +34,29 @@ function criarCobrinha(){
     }
 }
 
+// Evento de clique vai pegar a tecla e dar update.
+document.addEventListener('keydown', update);
+
+// Informando o código da tecla e criando a regra que não pode ser na direção oposta.
+function update (event){
+    if(event.keyCode == 37 && direction != "right") direction = "left";
+    if(event.keyCode == 38 && direction != "down") direction = "up";
+    if(event.keyCode == 39 && direction != "left") direction = "right";
+    if(event.keyCode == 40 && direction != "up") direction = "down";
+}
+
+// Função que carrega partes do jogo.
 function iniciarJogo(){
+    /**
+     * Criando a regra de ultrapassagem da tela(cenário) para voltar ao ponto incial.
+     * Impedindo que a cobrinha suma!
+    */
+    if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
+    if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
+    if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
+    if(snake[0].y < 0 && direction == "up") snake[0].y = 16 * box;
+
+    // Carrega as funções.
     criarBG();
     criarCobrinha();
 
@@ -42,8 +64,8 @@ function iniciarJogo(){
     let snakeY = snake[0].y;
 
     /** Coordenadas 
-        Exemplo: Se a cobrinha ir para o lado direito, adiciona um quadrado, 
-    caso vá para esquerda, diminue um quadrado.
+     * Exemplo: Se a cobrinha ir para o lado direito, adiciona um quadrado, 
+     * caso vá para esquerda, diminue um quadrado.
     */
     if(direction == "right") snakeX += box;
     if(direction == "left") snakeX -= box;
