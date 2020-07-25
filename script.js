@@ -63,6 +63,18 @@ function update (event){
 
 // Função que carrega partes do jogo.
 function iniciarJogo(){
+
+    /** 
+     * for para verificar se as posição estão se encontrando i - é o corpo da cobrinha.
+     * Caso se encontrem, exibirá um alert informando que perdeu. 
+    */
+    for(i = 1; i < snake.length; i++){
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+            clearInterval(jogo);
+            alert('Game Over :(');
+        }
+    }
+
     /**
      * Criando a regra de ultrapassagem da tela(cenário) para voltar ao ponto incial.
      * Impedindo que a cobrinha suma!
