@@ -89,8 +89,17 @@ function iniciarJogo(){
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    // Retirando o último elemento do array.
-    snake.pop();
+    /**
+     * Condição - Cobrinha comendo a comida.
+     * Caso as posições da cobrinha e comida sejam diferentes, retira o último elemento.
+     * Se não, ela aumenta e comida surge novamente aleatoriamente.
+     */
+    if(snakeX != food.x || snakeY != food.y){
+        // Retirando o último elemento do array.
+        snake.pop();
+    }else{food.x = Math.floor(Math.random() * 15 + 1) * box;
+        food.y = Math.floor(Math.random() * 15 + 1) * box;
+    }
 
     let newHead = {
         x: snakeX,
