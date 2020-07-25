@@ -26,7 +26,7 @@ let food = {
 // Criando a função do Background.
 function criarBG(){
     // Definindo a cor. | fillstyle trabalha com o estilo do canvas.
-    context.fillStyle = "lightgreen";
+    context.fillStyle = "black";
     // Desenha onde vai acontecer o jogo e trabalha com 4 parâmetros.
     context.fillRect(0, 0, 16 * box, 16 * box);
 }
