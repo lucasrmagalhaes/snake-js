@@ -1,37 +1,7 @@
-## Welcome to GitHub Pages
+#  SNAKE GAME  :snake:
 
-You can use the [editor on GitHub](https://github.com/lucasrmagalhaes/snake-js/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+- Famoso "[jogo da cobrinha](https://lucasrmagalhaes.github.io/snake-js/ "jogo da cobrinha")" desenvolvido em JavaScript.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+[![SNAKE GAME](https://i.imgur.com/3eKgtYO.jpg "SNAKE GAME")](https://i.imgur.com/3eKgtYO.jpg "SNAKE GAME")
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/lucasrmagalhaes/snake-js/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+- Desafio prático realizado na plataforma [Digital Innovation One](https://web.digitalinnovation.one/course/desafio-pratico-recriando-o-jogo-da-cobrinha-com-javascript/learning/66d83831-bae1-45f7-b2ea-af7d64d5d4f5?back=/track/desenvolvedor-front-end-angular&bootcamp_id=7c17db82-e997-4d61-971b-ed8070d9fc52 "Digital Innovation One"): Recriando o jogo da cobrinha com JavaScript.
