@@ -1,7 +1,7 @@
 // Carregando o snake com uma variável chamada "canvas".
-let canvas = document.getElementById("snake");
+let canvas = document.getElementById('snake');
 // Contexto é a reinderização do Canvas que vai trabalhar com um plano 2D.
-let context = canvas.getContext("2d"); 
+let context = canvas.getContext('2d'); 
 // 32 pixels cada quadrado.
 let box = 32;
 let snake = []; // Criando um array.
@@ -23,7 +23,10 @@ let food = {
     y: Math.floor(Math.random() * 15 + 1) * box
 }
 
-// Criando a função do Background.
+/**
+ * Criando a função do Background.
+ * Update: Alterado a cor de background para preto. 
+ */
 function criarBG(){
     // Definindo a cor. | fillstyle trabalha com o estilo do canvas.
     context.fillStyle = "black";
@@ -31,14 +34,17 @@ function criarBG(){
     context.fillRect(0, 0, 16 * box, 16 * box);
 }
 
-// Função responsável pela a criação da cobrinha.
+/**
+ * Função responsável pela a criação da cobrinha.
+ * Update: Adicionei -1 no box para criar um espaço entre os quadrados da cobrinha.
+ */
 function criarCobrinha(){
     // for vai percorrer todo o tamanho do array e vai incrementar.
     for(i=0; i < snake.length; i++){
         // Definindo a cor.
         context.fillStyle = "green";
         // Passando o tamanho.
-        context.fillRect(snake[i].x, snake[i].y, box, box);
+        context.fillRect(snake[i].x, snake[i].y, box-2, box-2);
     } // Fecha for
 } // Fecha função criarCobrinha
 
@@ -71,7 +77,7 @@ function iniciarJogo(){
     for(i = 1; i < snake.length; i++){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
             clearInterval(jogo);
-            alert('Game Over :(');
+            alert('GAME OVER');
         }
     }
 
@@ -92,7 +98,7 @@ function iniciarJogo(){
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
-    /** Coordenadas 
+    /** Coordenadas  - Movimento
      * Exemplo: Se a cobrinha ir para o lado direito, adiciona um quadrado, 
      * caso vá para esquerda, diminue um quadrado.
     */
