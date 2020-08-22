@@ -12,7 +12,6 @@
 - Updates:
 1. Alterado a cor de background.
 2. Adicionado espaçamento entre os quadrados da cobrinha.
-3. Em breve mais updates!
 
 ------------
 
