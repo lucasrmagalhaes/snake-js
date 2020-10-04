@@ -2,7 +2,7 @@
 
   Famoso "[jogo da cobrinha](https://lucasrmagalhaes.github.io/snake-js/ "jogo da cobrinha")" desenvolvido em JavaScript.
 
-[![SNAKE GAME](https://i.imgur.com/3eKgtYO.jpg "SNAKE GAME")](https://i.imgur.com/3eKgtYO.jpg "SNAKE GAME")
+[![SNAKE GAME](https://i.imgur.com/3eKgtYO.jpg "SNAKE GAME")](https://lucasrmagalhaes.github.io/snake-js/ "SNAKE GAME")
 
 
 ------------
