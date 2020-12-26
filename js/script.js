@@ -130,4 +130,3 @@ function iniciarJogo(){
 
 // A cada 100 milisegundos o iniciarJogo vai estar sendo renovado caso trave. 
 let jogo = setInterval(iniciarJogo, 100);
-
