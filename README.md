@@ -1,5 +1,5 @@
 #  SNAKE GAME  :snake:
-[![SNAKE GAME](https://github.com/lucasrmagalhaes/snake-js/blob/master/img/capa.jpg "SNAKE GAME")](https://snakegame-dio.netlify.app/ "SNAKE GAME")
+[![SNAKE GAME](https://github.com/lucasrmagalhaes/snake-js/blob/master/img/capa.jpg "SNAKE GAME")](https://lucasrmagalhaes.github.io/snake-js/ "SNAKE GAME")
 - Famoso "jogo da cobrinha" desenvolvido em JavaScript.
 ------------
 - Updates:
