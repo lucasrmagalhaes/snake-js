@@ -1,17 +1,9 @@
-<p align="center">
-  
-  <a href="lucasrmagalhaes.github.io/snake-js/">
-    <img 
-         src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif" 
-         alt="Snake Game" 
-    />
-  </a>
-  
-  <br>  
-  
-  SNAKE GAME  :snake:
-
-</p>
+<a href="https://lucasrmagalhaes.github.io/snake-js/">
+  <img 
+       src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif" 
+       alt="Snake Game" 
+  />
+</a>
 
 ------------
 - Famoso "jogo da cobrinha" desenvolvido em JavaScript.
