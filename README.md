@@ -5,10 +5,10 @@
          alt="Snake Game" 
     />
   </a>
+  <br>
+  - Famoso jogo da :snake: desenvolvido em JavaScript.
 </p>
 
-------------
-- Famoso "jogo da cobrinha" desenvolvido em JavaScript.
 ------------
 - Updates:
 1. Alterado a cor de background.
