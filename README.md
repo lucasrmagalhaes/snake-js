@@ -6,7 +6,7 @@
     />
   </a>
   <br>
-  - Famoso jogo da :snake: desenvolvido em JavaScript.
+  Famoso jogo da :snake: desenvolvido em JavaScript.
 </p>
 
 ------------
