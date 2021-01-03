@@ -1,9 +1,16 @@
-
-
 <p align="center">
-  <img src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif" href="lucasrmagalhaes.github.io/snake-js/" alt="Snake Game"/>
-  <br>
+  
+  <a href="lucasrmagalhaes.github.io/snake-js/">
+    <img 
+         src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif" 
+         alt="Snake Game" 
+    />
+  </a>
+  
+  <br>  
+  
   SNAKE GAME  :snake:
+
 </p>
 
 ------------
