@@ -20,8 +20,9 @@
   <br />
   
   <ol>
-    <li>Alterado a cor de background.</li>
-    <li>Adicionado espaçamento entre os quadrados da cobrinha.</li>
+    <li>Alterado a cor de background;</li>
+    <li>Adicionado espaçamento entre os quadrados da cobrinha; e</li>
+    <li>Fix pelo <a href="https://github.com/roanrobersson">@roanrobersson</a> - Cobrinha deixou de sumir durante teletransporte + keydown.</li>
   </ol>
 
 </details>
