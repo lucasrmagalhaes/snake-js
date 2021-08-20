@@ -1,5 +1,3 @@
-<h1 align="center">:snake:</h1>
-
 <p align="center">
   <a href="https://lucasrmagalhaes.github.io/snake-js/">
     <img 
@@ -8,7 +6,7 @@
     />
   </a>
   <br />
-  <i>Nostálgico jogo da cobrinha desenvolvido em JS.</i>
+  <i>Nostálgico jogo da :snake: desenvolvido em JS.</i>
 </p>
 
 <hr />
