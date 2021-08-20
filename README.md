@@ -1,9 +1,9 @@
-<h1 align="center">SNAKE GAME :snake:</h1>
+<h1 align="center">:snake:</h1>
 
 <p align="center">
   <a href="https://lucasrmagalhaes.github.io/snake-js/">
     <img 
-         src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif" 
+         src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/Snake.gif?raw=true" 
          alt="Snake Game" 
     />
   </a>
