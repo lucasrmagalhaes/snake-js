@@ -1,6 +1,24 @@
 <h1 align="center">SNAKE :snake:</h1>
 
 <p align="center">
+  <a href="https://github.com/lucasrmagalhaes/snake-js/issues">
+    <img src="https://img.shields.io/github/issues/lucasrmagalhaes/snake-js" /> 
+  </a>
+    
+  <a href="https://github.com/lucasrmagalhaes/snake-js/network/members">
+    <img src="https://img.shields.io/github/forks/lucasrmagalhaes/snake-js" /> 
+  </a>
+    
+  <a href="https://github.com/lucasrmagalhaes/snake-js/stargazers">
+    <img src="https://img.shields.io/github/stars/lucasrmagalhaes/snake-js" /> 
+  </a>
+  
+   <a href="https://github.com/lucasrmagalhaes/snake-js/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/lucasrmagalhaes/snake-js" /> 
+  </a>
+</p>
+
+<p align="center">
   <a href="https://lucasrmagalhaes.github.io/snake-js/">
     <img 
          src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif?raw=true" 
