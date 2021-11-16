@@ -2,19 +2,23 @@
 
 <p align="center">
   <a href="https://github.com/lucasrmagalhaes/snake-js/issues">
-    <img src="https://img.shields.io/github/issues/lucasrmagalhaes/snake-js" /> 
+    <img src="https://img.shields.io/github/issues/lucasrmagalhaes/snake-js?style=plastic" /> 
   </a>
     
   <a href="https://github.com/lucasrmagalhaes/snake-js/network/members">
-    <img src="https://img.shields.io/github/forks/lucasrmagalhaes/snake-js" /> 
+    <img src="https://img.shields.io/github/forks/lucasrmagalhaes/snake-js?style=plastic" /> 
   </a>
     
   <a href="https://github.com/lucasrmagalhaes/snake-js/stargazers">
-    <img src="https://img.shields.io/github/stars/lucasrmagalhaes/snake-js" /> 
+    <img src="https://img.shields.io/github/stars/lucasrmagalhaes/snake-js?style=plastic" /> 
   </a>
   
    <a href="https://github.com/lucasrmagalhaes/snake-js/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/lucasrmagalhaes/snake-js" /> 
+    <img src="https://img.shields.io/github/license/lucasrmagalhaes/snake-js?style=plastic" /> 
+  </a>
+  
+  <a href="https://github.com/lucasrmagalhaes/snake-js/deployments">
+    <img src="https://img.shields.io/github/deployments/lucasrmagalhaes/snake-js/github-pages?style=plastic" />
   </a>
 </p>
 
