@@ -59,6 +59,67 @@ function drawFood(){
 // Evento de clique vai pegar a tecla e dar update.
 document.addEventListener('keydown', update);
 
+// Detectar evento de swipe em dispositivos móveis
+document.addEventListener("touchstart", startTouch, false);
+document.addEventListener("touchmove", moveTouch, false);
+
+var swipeInitialX = null;
+var swipeInitialY = null;
+
+function startTouch(e) {
+    swipeInitialX = e.touches[0].clientX;
+    swipeInitialY = e.touches[0].clientY;
+};
+
+function moveTouch(e) {
+
+  if(isSnakeOffScreen()) return;
+
+  if (swipeInitialX === null) {
+    return;
+  }
+  
+  if (swipeInitialY === null) {
+    return;
+  }
+  
+  var currentX = e.touches[0].clientX;
+  var currentY = e.touches[0].clientY;
+  
+  var diffX = swipeInitialX - currentX;
+  var diffY = swipeInitialY - currentY;
+  
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    // sliding horizontally
+    if (diffX > 0) {
+      // swiped left
+      console.log("swiped left");
+      direction = "left";
+    } else {
+      // swiped right
+      console.log("swiped right");
+      direction = "right";
+    }  
+  } else {
+    // sliding vertically
+    if (diffY > 0) {
+      // swiped up
+      console.log("swiped up");
+      direction = "up";
+    } else {
+      // swiped down
+      console.log("swiped down");
+      direction = "down";
+    }  
+  }
+  
+  swipeInitialX = null;
+  swipeInitialY = null;
+
+  e.preventDefault();
+};
+
+
 // Informando o código da tecla e criando a regra que não pode ser na direção oposta.
 function update (event){
     if(isSnakeOffScreen()) return;
