@@ -45,6 +45,7 @@
     <li>Alterado a cor de background;</li>
     <li>Adicionado espaçamento entre os quadrados da cobrinha; e</li>
     <li>Fix pelo <a href="https://github.com/roanrobersson">@roanrobersson</a> - Cobrinha deixou de sumir durante teletransporte + keydown.</li>
+    <li>Feat pelo <a href="https://github.com/Jorgewlf88">@Jorgewlf88</a> - Suporte para dispositivos móveis.
   </ol>
 
 </details>
