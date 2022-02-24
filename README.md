@@ -66,3 +66,20 @@
 </details>
 
 <hr />
+
+<h4>Contribuidores</h4>
+
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://github.com/roanrobersson">
+          <img src="https://avatars.githubusercontent.com/u/31264496?v=4" width="100px;"/><br><sub><b>Roan de Oliveira</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Jorgewlf88">
+        <img src="https://avatars.githubusercontent.com/u/5809383?v=4" width="100px;"/><br><sub><b>Jorge Ortega Pereira</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
