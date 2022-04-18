@@ -1,28 +1,6 @@
 <h1 align="center">SNAKE :snake:</h1>
 
 <p align="center">
-  <a href="https://github.com/lucasrmagalhaes/snake-js/issues">
-    <img src="https://img.shields.io/github/issues/lucasrmagalhaes/snake-js?style=plastic" /> 
-  </a>
-    
-  <a href="https://github.com/lucasrmagalhaes/snake-js/network/members">
-    <img src="https://img.shields.io/github/forks/lucasrmagalhaes/snake-js?style=plastic" /> 
-  </a>
-    
-  <a href="https://github.com/lucasrmagalhaes/snake-js/stargazers">
-    <img src="https://img.shields.io/github/stars/lucasrmagalhaes/snake-js?style=plastic" /> 
-  </a>
-  
-   <a href="https://github.com/lucasrmagalhaes/snake-js/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/lucasrmagalhaes/snake-js?style=plastic" /> 
-  </a>
-  
-  <a href="https://github.com/lucasrmagalhaes/snake-js/deployments">
-    <img src="https://img.shields.io/github/deployments/lucasrmagalhaes/snake-js/github-pages?style=plastic" />
-  </a>
-</p>
-
-<p align="center">
   <a href="https://lucasrmagalhaes.github.io/snake-js/">
     <img 
          src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif?raw=true" 
@@ -46,6 +24,7 @@
     <li>Adicionado espaçamento entre os quadrados da cobrinha;</li>
     <li>Fix pelo <a href="https://github.com/roanrobersson">@roanrobersson</a> - Cobrinha deixou de sumir durante teletransporte + keydown; e</li>
     <li>Feat pelo <a href="https://github.com/Jorgewlf88">@Jorgewlf88</a> - Suporte para dispositivos móveis.
+    <li>Feat pelo <a href="https://github.com/MaurerKrisztian">@MaurerKrisztian</a> - Adicionado configuração de velocidade e pontuação.
   </ol>
 
 </details>
@@ -80,6 +59,33 @@
       <a href="https://github.com/Jorgewlf88">
         <img src="https://avatars.githubusercontent.com/u/5809383?v=4" width="100px;"/><br><sub><b>Jorge Ortega Pereira</b></sub>
       </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/MaurerKrisztian">
+        <img src="https://avatars.githubusercontent.com/u/48491140?v=4" width="100px;"/><br><sub><b>Maurer Krisztian</b></sub>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td colspan="3">
+        <a href="https://github.com/lucasrmagalhaes/snake-js/issues">
+          <img src="https://img.shields.io/github/issues/lucasrmagalhaes/snake-js?style=plastic" /> 
+        </a>
+        <a href="https://github.com/lucasrmagalhaes/snake-js/network/members">
+          <img src="https://img.shields.io/github/forks/lucasrmagalhaes/snake-js?style=plastic" /> 
+        </a>
+        <a href="https://github.com/lucasrmagalhaes/snake-js/stargazers">
+          <img src="https://img.shields.io/github/stars/lucasrmagalhaes/snake-js?style=plastic" /> 
+        </a>
+         <a href="https://github.com/lucasrmagalhaes/snake-js/blob/master/LICENSE">
+          <img src="https://img.shields.io/github/license/lucasrmagalhaes/snake-js?style=plastic" /> 
+        </a>
+        <a href="https://github.com/lucasrmagalhaes/snake-js/deployments">
+          <img src="https://img.shields.io/github/deployments/lucasrmagalhaes/snake-js/github-pages?style=plastic" />
+        </a>
     </td>
   </tr>
 </table>
