@@ -1,3 +1,10 @@
+const settings = {
+    speed: 100,
+    foodColor: "red",
+    backgroundColor: "black",
+    snakeColor: "green"
+}
+
 // Carregando o snake com uma variável chamada "canvas".
 let canvas = document.getElementById('snake');
 // Contexto é a reinderização do Canvas que vai trabalhar com um plano 2D.
@@ -29,7 +36,7 @@ let food = {
  */
 function criarBG(){
     // Definindo a cor. | fillstyle trabalha com o estilo do canvas.
-    context.fillStyle = "black";
+    context.fillStyle = settings.backgroundColor;
     // Desenha onde vai acontecer o jogo e trabalha com 4 parâmetros.
     context.fillRect(0, 0, 16 * box, 16 * box);
 }
@@ -42,7 +49,7 @@ function criarCobrinha(){
     // for vai percorrer todo o tamanho do array e vai incrementar.
     for(i=0; i < snake.length; i++){
         // Definindo a cor.
-        context.fillStyle = "green";
+        context.fillStyle = settings.snakeColor;
         // Passando o tamanho.
         context.fillRect(snake[i].x, snake[i].y, box-2, box-2);
     } // Fecha for
@@ -51,7 +58,7 @@ function criarCobrinha(){
 // Função responsável pela a criação da comida.
 function drawFood(){
     // Definindo a cor da comida.
-    context.fillStyle = "red";
+    context.fillStyle = settings.foodColor;
     // Passando as posições quando o fillRect ir desenhar.
     context.fillRect(food.x, food.y, box, box)
 }
@@ -147,7 +154,7 @@ function iniciarJogo(){
     for(i = 1; i < snake.length; i++){
         if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
             clearInterval(jogo);
-            alert('GAME OVER');
+            alert(`GAME OVER! Score: ${snake.length}`);
         }
     }
 
@@ -201,4 +208,15 @@ function iniciarJogo(){
 }
 
 // A cada 100 milisegundos o iniciarJogo vai estar sendo renovado caso trave. 
-let jogo = setInterval(iniciarJogo, 100);
+let jogo = setInterval(iniciarJogo, settings.speed);
+
+function applySpeed(){
+    const speedInput = document.getElementById("speed");
+    settings.speed = (Number.parseInt(speedInput.max) + Number.parseInt(speedInput.min)) - Number.parseInt(speedInput.value);
+    setSpeed(settings.speed);
+}
+
+function setSpeed(speed){
+    clearInterval(jogo);
+    jogo = setInterval(iniciarJogo, speed);
+}
