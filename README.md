@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://lucasrmagalhaes.github.io/snake-js/">
     <img 
-         src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.gif?raw=true" 
+         src="https://github.com/lucasrmagalhaes/snake-js/blob/master/img/snake.png?raw=true" 
          alt="Snake Game" 
     />
   </a>
