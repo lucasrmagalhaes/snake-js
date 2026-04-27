@@ -25,6 +25,17 @@
     <li>Fix pelo <a href="https://github.com/roanrobersson">@roanrobersson</a> - Cobrinha deixou de sumir durante teletransporte + keydown; e</li>
     <li>Feat pelo <a href="https://github.com/Jorgewlf88">@Jorgewlf88</a> - Suporte para dispositivos móveis.
     <li>Feat pelo <a href="https://github.com/MaurerKrisztian">@MaurerKrisztian</a> - Adicionado configuração de velocidade e pontuação.
+    <li>Score real, high score persistido em <code>localStorage</code> e tela de Game Over no canvas (sem <code>alert</code>).</li>
+    <li>Tela inicial com instruções, pausa (Space/P) e suporte a WASD além das setas.</li>
+    <li>Visual repaginado: cabeça com olhos direcionais, segmentos arredondados, grid sutil, comida com gradiente e pulsação.</li>
+    <li>Comida especial dourada (+5 pontos, tempo limitado, com anel de timer).</li>
+    <li>Aceleração progressiva conforme o score sobe.</li>
+    <li>Modo "paredes mortais" opcional (toggle), com borda vermelha indicando o modo ativo.</li>
+    <li>Sons via Web Audio API (eat, special, game over) com toggle de mute.</li>
+    <li>Presets de dificuldade: Easy, Normal e Hard.</li>
+    <li>6 personagens de cobra selecionáveis: <strong>Verdão</strong>, <strong>Coral</strong>, <strong>Jararaca</strong>, <strong>Píton</strong>, <strong>Naja</strong> e <strong>Brasa</strong>.</li>
+    <li>Canvas widescreen 25×13 (proporção ~16:9), responsivo em mobile e modo fullscreen.</li>
+    <li>Favicon SVG temático.</li>
   </ol>
 
 </details>
