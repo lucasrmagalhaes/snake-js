@@ -11,20 +11,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="stylesheet" href="css/style.css">
-    <!-- defer faz o JavaScript ser carregado no final. -->
-    <script defer src="js/script.js"></script>
+    <script type="module" src="js/main.js"></script>
     <title>Snake Game</title>
 </head>
 <body>
     <h1>SNAKE GAME!</h1>
     <div class="controls diff">
-        <button id="diff_easy" type="button" onclick="applyDifficulty('easy')">Easy</button>
-        <button id="diff_normal" type="button" onclick="applyDifficulty('normal')">Normal</button>
-        <button id="diff_hard" type="button" onclick="applyDifficulty('hard')">Hard</button>
+        <button id="diff_easy" type="button">Easy</button>
+        <button id="diff_normal" type="button">Normal</button>
+        <button id="diff_hard" type="button">Hard</button>
     </div>
     <div class="controls">
         <label>snake:
-            <select id="snakeSelect" onchange="applySnake(this.value)">
+            <select id="snakeSelect">
                 <option value="verdao">Verdão</option>
                 <option value="coral">Coral</option>
                 <option value="jararaca">Jararaca</option>
@@ -33,11 +32,11 @@
                 <option value="brasa">Brasa</option>
             </select>
         </label>
-        <label>speed: <input id="speed" min="30" max="230" type="range" step="10" value="130" onchange="applySpeed()"></label>
-        <button id="wallToggle" type="button" onclick="toggleWalls()">Walls: OFF</button>
-        <button id="muteToggle" type="button" onclick="toggleMute()">Sound: ON</button>
-        <button id="fsToggle" type="button" onclick="toggleFullscreen()">Fullscreen</button>
-        <button id="lbBtn" type="button" onclick="openLeaderboard()">Ranking</button>
+        <label>speed: <input id="speed" min="30" max="230" type="range" step="10" value="130"></label>
+        <button id="wallToggle" type="button">Walls: OFF</button>
+        <button id="muteToggle" type="button">Sound: ON</button>
+        <button id="fsToggle" type="button">Fullscreen</button>
+        <button id="lbBtn" type="button">Ranking</button>
     </div>
     <canvas id="snake" width="800" height="448"></canvas>
 </body>

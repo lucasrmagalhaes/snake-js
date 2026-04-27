@@ -1,9 +1,17 @@
-const CACHE = "snake-v1";
+const CACHE = "snake-v2";
 const ASSETS = [
     "./",
     "./index.html",
     "./css/style.css",
-    "./js/script.js",
+    "./js/main.js",
+    "./js/config.js",
+    "./js/state.js",
+    "./js/audio.js",
+    "./js/render.js",
+    "./js/game.js",
+    "./js/input.js",
+    "./js/ui.js",
+    "./js/leaderboard.js",
     "./favicon.svg",
     "./manifest.json"
 ];
