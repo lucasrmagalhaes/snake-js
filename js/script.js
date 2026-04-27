@@ -804,3 +804,9 @@ if (activeDifficulty) applyDifficulty(activeDifficulty);
 
 resetGame();
 requestAnimationFrame(render);
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
+}
