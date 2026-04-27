@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="css/style.css">
     <!-- defer faz o JavaScript ser carregado no final. -->
     <script defer src="js/script.js"></script>
@@ -11,8 +12,27 @@
 </head>
 <body>
     <h1>SNAKE GAME!</h1>
-    speed: <input id="speed" min="30" max="230" type="range" step="10" value="130" onchange="applySpeed()">
-    <!-- Largura e altura do jogo. -->
-    <canvas id="snake" width="512" height="512"></canvas>
+    <div class="controls diff">
+        <button id="diff_easy" type="button" onclick="applyDifficulty('easy')">Easy</button>
+        <button id="diff_normal" type="button" onclick="applyDifficulty('normal')">Normal</button>
+        <button id="diff_hard" type="button" onclick="applyDifficulty('hard')">Hard</button>
+    </div>
+    <div class="controls">
+        <label>snake:
+            <select id="snakeSelect" onchange="applySnake(this.value)">
+                <option value="verdao">Verdão</option>
+                <option value="coral">Coral</option>
+                <option value="jararaca">Jararaca</option>
+                <option value="piton">Píton</option>
+                <option value="naja">Naja</option>
+                <option value="brasa">Brasa</option>
+            </select>
+        </label>
+        <label>speed: <input id="speed" min="30" max="230" type="range" step="10" value="130" onchange="applySpeed()"></label>
+        <button id="wallToggle" type="button" onclick="toggleWalls()">Walls: OFF</button>
+        <button id="muteToggle" type="button" onclick="toggleMute()">Sound: ON</button>
+        <button id="fsToggle" type="button" onclick="toggleFullscreen()">Fullscreen</button>
+    </div>
+    <canvas id="snake" width="800" height="448"></canvas>
 </body>
 </html>
