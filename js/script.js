@@ -150,11 +150,12 @@ function drawBackground() {
     if (wallMode) {
         context.strokeStyle = "rgba(255, 71, 87, 0.55)";
         context.lineWidth = 2;
-        context.strokeRect(2, 2, boardW - 4, boardH - 4);
+        roundedRectPath(4, 4, boardW - 8, boardH - 8, 10);
+        context.stroke();
     }
 }
 
-function roundedRect(x, y, w, h, r) {
+function roundedRectPath(x, y, w, h, r) {
     context.beginPath();
     context.moveTo(x + r, y);
     context.arcTo(x + w, y, x + w, y + h, r);
@@ -162,6 +163,10 @@ function roundedRect(x, y, w, h, r) {
     context.arcTo(x, y + h, x, y, r);
     context.arcTo(x, y, x + w, y, r);
     context.closePath();
+}
+
+function roundedRect(x, y, w, h, r) {
+    roundedRectPath(x, y, w, h, r);
     context.fill();
 }
 
