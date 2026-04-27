@@ -96,6 +96,7 @@ let isGameOver = false;
 let isReady = true;
 let jogo;
 let eatEffect = null;
+let deathAnim = null;
 
 function effectiveInterval() {
     return Math.max(MIN_INTERVAL, settings.speed - score * ACCEL_PER_SCORE);
@@ -110,6 +111,7 @@ function resetGame() {
     isPaused = false;
     isReady = true;
     eatEffect = null;
+    deathAnim = null;
     specialFood = null;
     food = spawnFreeCell();
     setSpeed(effectiveInterval());
@@ -164,6 +166,7 @@ function roundedRect(x, y, w, h, r) {
 }
 
 function drawSnake() {
+    if (deathAnim) return;
     const pad = 2;
     const segSize = box - pad * 2;
 
@@ -250,6 +253,28 @@ function drawSpecialFood(now) {
     context.beginPath();
     context.arc(cx, cy, baseR + 4, -Math.PI / 2, -Math.PI / 2 + t * Math.PI * 2);
     context.stroke();
+}
+
+function drawDeathAnim(now) {
+    if (!deathAnim) return;
+    const elapsed = now - deathAnim.start;
+    const dur = 1500;
+    if (elapsed > dur) return;
+
+    const t = elapsed / 1000;
+    const alpha = Math.max(0, 1 - elapsed / dur);
+    context.globalAlpha = alpha;
+    context.fillStyle = settings.snakeColor;
+
+    deathAnim.particles.forEach(p => {
+        const x = p.x + p.vx * t * 60;
+        const y = p.y + p.vy * t * 60 + 0.5 * 700 * t * t;
+        const radius = (box / 2 - 2) * Math.max(0.4, alpha);
+        context.beginPath();
+        context.arc(x, y, radius, 0, Math.PI * 2);
+        context.fill();
+    });
+    context.globalAlpha = 1;
 }
 
 function drawEatEffect(now) {
@@ -343,15 +368,26 @@ function drawStartScreen() {
 function render() {
     const now = performance.now();
 
+    let shakeX = 0, shakeY = 0;
+    if (deathAnim) {
+        const elapsed = now - deathAnim.start;
+        if (elapsed < 350) {
+            const intensity = (1 - elapsed / 350) * 8;
+            shakeX = (Math.random() - 0.5) * intensity * 2;
+            shakeY = (Math.random() - 0.5) * intensity * 2;
+        }
+    }
+
     context.clearRect(0, 0, boardW, headerH + boardH);
     drawHUD();
 
     context.save();
-    context.translate(0, headerH);
+    context.translate(shakeX, headerH + shakeY);
     drawBackground();
     drawFood(now);
     drawSpecialFood(now);
     drawSnake();
+    drawDeathAnim(now);
     drawEatEffect(now);
     if (isReady) drawStartScreen();
     else if (isPaused && !isGameOver) drawCenterText("Paused", "Press Space/P to resume");
@@ -422,6 +458,15 @@ function gameOver() {
         localStorage.setItem("snakeHighScore", String(highScore));
     }
     playGameOver();
+    deathAnim = {
+        start: performance.now(),
+        particles: snake.map(s => ({
+            x: s.x + box / 2,
+            y: s.y + box / 2,
+            vx: (Math.random() - 0.5) * 8,
+            vy: -2 - Math.random() * 4,
+        })),
+    };
 }
 
 function tick() {
