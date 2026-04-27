@@ -13,10 +13,10 @@ const SPECIAL_TTL = 6000;
 const SPECIAL_SCORE = 5;
 const SPECIAL_CHANCE = 0.25;
 
-// Dreamlo leaderboard — crie em https://dreamlo.com/ e cole as duas chaves abaixo.
-// Sem chaves, o botao Ranking exibe um aviso e o submit fica desligado.
-const DREAMLO_PUBLIC = "69eed7af8f40bb10688cf284";
-const DREAMLO_PRIVATE = "zSnZdm9_pkCvFKLuS2qrBwSBXGx9ghXkCXIKmzB7smbQ";
+// Firebase Firestore leaderboard. Requer Firestore criado e regras configuradas
+// para a coleção "scores" (allow read; allow create com validacao de name/score).
+const FIREBASE_PROJECT = "snake-a82fa";
+const FIREBASE_API_KEY = "AIzaSyArefU28EHOllP0yttIKUZSME8lOGoSr4o";
 
 const DIFFICULTIES = {
     easy:   { speed: 130, walls: false, accelPerScore: 2, minInterval: 70 },
@@ -658,7 +658,7 @@ function applySnake(name) {
 }
 
 function leaderboardConfigured() {
-    return Boolean(DREAMLO_PUBLIC && DREAMLO_PRIVATE);
+    return Boolean(FIREBASE_PROJECT && FIREBASE_API_KEY);
 }
 
 function promptForName() {
@@ -673,20 +673,47 @@ function promptForName() {
 
 async function submitScore(scoreVal) {
     if (!leaderboardConfigured() || !playerName || scoreVal <= 0) return;
+    const url = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/scores?key=${FIREBASE_API_KEY}`;
+    const body = {
+        fields: {
+            name: { stringValue: playerName },
+            score: { integerValue: String(scoreVal) },
+            ts: { timestampValue: new Date().toISOString() }
+        }
+    };
     try {
-        await fetch(`http://dreamlo.com/lb/${DREAMLO_PRIVATE}/add/${encodeURIComponent(playerName)}/${scoreVal}`);
+        await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
     } catch (e) {}
 }
 
 async function fetchLeaderboard() {
     if (!leaderboardConfigured()) return;
     leaderboardData = "loading";
+    const url = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents:runQuery?key=${FIREBASE_API_KEY}`;
+    const body = {
+        structuredQuery: {
+            from: [{ collectionId: "scores" }],
+            orderBy: [{ field: { fieldPath: "score" }, direction: "DESCENDING" }],
+            limit: 20
+        }
+    };
     try {
-        const r = await fetch(`http://dreamlo.com/lb/${DREAMLO_PUBLIC}/json/20`);
-        const j = await r.json();
-        const lb = j.dreamlo?.leaderboard;
-        const entry = lb?.entry;
-        leaderboardData = entry ? (Array.isArray(entry) ? entry : [entry]) : [];
+        const r = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+        const data = await r.json();
+        leaderboardData = data
+            .filter(d => d.document)
+            .map(d => ({
+                name: d.document.fields.name?.stringValue || "—",
+                score: parseInt(d.document.fields.score?.integerValue) || 0
+            }));
     } catch (e) {
         leaderboardData = "error";
     }
@@ -694,7 +721,7 @@ async function fetchLeaderboard() {
 
 function openLeaderboard() {
     if (!leaderboardConfigured()) {
-        alert("Ranking nao configurado.\nCrie uma leaderboard em dreamlo.com e cole as chaves em DREAMLO_PUBLIC / DREAMLO_PRIVATE no script.js.");
+        alert("Ranking nao configurado.\nDefina FIREBASE_PROJECT e FIREBASE_API_KEY no script.js.");
         return;
     }
     showingLeaderboard = true;
