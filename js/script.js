@@ -13,6 +13,11 @@ const SPECIAL_TTL = 6000;
 const SPECIAL_SCORE = 5;
 const SPECIAL_CHANCE = 0.25;
 
+// Dreamlo leaderboard — crie em https://dreamlo.com/ e cole as duas chaves abaixo.
+// Sem chaves, o botao Ranking exibe um aviso e o submit fica desligado.
+const DREAMLO_PUBLIC = "69eed7af8f40bb10688cf284";
+const DREAMLO_PRIVATE = "zSnZdm9_pkCvFKLuS2qrBwSBXGx9ghXkCXIKmzB7smbQ";
+
 const DIFFICULTIES = {
     easy:   { speed: 130, walls: false, accelPerScore: 2, minInterval: 70 },
     normal: { speed: 100, walls: false, accelPerScore: 3, minInterval: 55 },
@@ -53,6 +58,9 @@ let activeDifficulty = localStorage.getItem("snakeDifficulty");
 if (!DIFFICULTIES[activeDifficulty]) activeDifficulty = null;
 let currentSnake = localStorage.getItem("snakeCharacter");
 if (!SNAKES[currentSnake]) currentSnake = "verdao";
+let playerName = localStorage.getItem("snakePlayerName") || "";
+let leaderboardData = null;
+let showingLeaderboard = false;
 let audioCtx = null;
 
 function ensureAudio() {
@@ -397,6 +405,7 @@ function render() {
     if (isReady) drawStartScreen();
     else if (isPaused && !isGameOver) drawCenterText("Paused", "Press Space/P to resume");
     if (isGameOver) drawCenterText(`Game Over — ${score}`, "Press Space/Enter to restart");
+    if (showingLeaderboard) drawLeaderboard();
     context.restore();
 
     requestAnimationFrame(render);
@@ -437,6 +446,14 @@ function setDirection(dir) {
 }
 
 function handleKey(event) {
+    if (showingLeaderboard) {
+        if (event.keyCode === 27 || event.keyCode === 76) closeLeaderboard();
+        return;
+    }
+    if (event.keyCode === 76) {
+        openLeaderboard();
+        return;
+    }
     if (isReady) {
         if (event.keyCode === 13 || event.keyCode === 32) isReady = false;
         return;
@@ -472,6 +489,10 @@ function gameOver() {
             vy: -2 - Math.random() * 4,
         })),
     };
+    if (leaderboardConfigured() && score > 0) {
+        if (!playerName) promptForName();
+        if (playerName) submitScore(score);
+    }
 }
 
 function tick() {
@@ -634,6 +655,104 @@ function applySnake(name) {
         sel.style.borderColor = s.body;
         sel.blur();
     }
+}
+
+function leaderboardConfigured() {
+    return Boolean(DREAMLO_PUBLIC && DREAMLO_PRIVATE);
+}
+
+function promptForName() {
+    const name = prompt("Seu nome para o ranking:", playerName || "");
+    if (name && name.trim()) {
+        playerName = name.trim().slice(0, 20);
+        localStorage.setItem("snakePlayerName", playerName);
+        return true;
+    }
+    return false;
+}
+
+async function submitScore(scoreVal) {
+    if (!leaderboardConfigured() || !playerName || scoreVal <= 0) return;
+    try {
+        await fetch(`http://dreamlo.com/lb/${DREAMLO_PRIVATE}/add/${encodeURIComponent(playerName)}/${scoreVal}`);
+    } catch (e) {}
+}
+
+async function fetchLeaderboard() {
+    if (!leaderboardConfigured()) return;
+    leaderboardData = "loading";
+    try {
+        const r = await fetch(`http://dreamlo.com/lb/${DREAMLO_PUBLIC}/json/20`);
+        const j = await r.json();
+        const lb = j.dreamlo?.leaderboard;
+        const entry = lb?.entry;
+        leaderboardData = entry ? (Array.isArray(entry) ? entry : [entry]) : [];
+    } catch (e) {
+        leaderboardData = "error";
+    }
+}
+
+function openLeaderboard() {
+    if (!leaderboardConfigured()) {
+        alert("Ranking nao configurado.\nCrie uma leaderboard em dreamlo.com e cole as chaves em DREAMLO_PUBLIC / DREAMLO_PRIVATE no script.js.");
+        return;
+    }
+    showingLeaderboard = true;
+    fetchLeaderboard();
+    document.getElementById("lbBtn")?.blur();
+}
+
+function closeLeaderboard() {
+    showingLeaderboard = false;
+}
+
+function drawLeaderboard() {
+    const cx = boardW / 2;
+    context.fillStyle = "#0d0d10";
+    context.fillRect(0, 0, boardW, boardH);
+
+    context.textAlign = "center";
+    context.fillStyle = settings.snakeColor;
+    context.font = "bold 32px sans-serif";
+    context.fillText("RANKING GLOBAL", cx, 50);
+
+    context.fillStyle = "rgba(255,255,255,0.5)";
+    context.font = "12px sans-serif";
+    context.fillText("L ou Esc para fechar", cx, 72);
+
+    if (leaderboardData === "loading") {
+        context.fillStyle = "rgba(255,255,255,0.7)";
+        context.font = "16px sans-serif";
+        context.fillText("Carregando…", cx, 200);
+        return;
+    }
+    if (leaderboardData === "error") {
+        context.fillStyle = "#ff7b86";
+        context.font = "16px sans-serif";
+        context.fillText("Falha ao carregar", cx, 200);
+        return;
+    }
+    if (!leaderboardData || leaderboardData.length === 0) {
+        context.fillStyle = "rgba(255,255,255,0.7)";
+        context.font = "16px sans-serif";
+        context.fillText("Sem scores ainda. Seja o primeiro!", cx, 200);
+        return;
+    }
+
+    context.textAlign = "left";
+    context.font = "14px monospace";
+    let y = 110;
+    leaderboardData.slice(0, 12).forEach((entry, i) => {
+        const rank = String(i + 1).padStart(2, " ");
+        const name = String(entry.name || "—").slice(0, 18).padEnd(20, " ");
+        const sc = String(entry.score || 0).padStart(6, " ");
+        const isMe = playerName && entry.name === playerName;
+        context.fillStyle = i === 0 ? settings.specialColor
+                          : isMe ? settings.snakeColor
+                          : "rgba(255,255,255,0.85)";
+        context.fillText(`${rank}. ${name} ${sc}`, 80, y);
+        y += 22;
+    });
 }
 
 function toggleFullscreen() {
