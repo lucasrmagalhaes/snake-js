@@ -150,7 +150,7 @@ function drawBackground() {
     if (wallMode) {
         context.strokeStyle = "rgba(255, 71, 87, 0.55)";
         context.lineWidth = 2;
-        context.strokeRect(1, 1, boardW - 2, boardH - 2);
+        context.strokeRect(2, 2, boardW - 4, boardH - 4);
     }
 }
 
