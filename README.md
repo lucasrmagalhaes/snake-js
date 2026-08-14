@@ -54,6 +54,36 @@ npx serve .
 <hr />
 
 <details>
+
+  <summary><strong>Ranking e segurança (Firestore)</strong></summary>
+
+  <br />
+
+  <p>O ranking global grava os scores em um Firestore via REST (<code>js/leaderboard.js</code>), direto do navegador. Isso significa que <strong>sem Security Rules o banco aceita escrita de qualquer origem</strong>: qualquer pessoa com a URL do projeto consegue inserir um score arbitrário (ex.: <code>999999</code>), editar ou apagar documentos — a API key do Firebase não é segredo e não protege nada sozinha.</p>
+
+  <p>O arquivo <a href="firestore.rules"><code>firestore.rules</code></a> na raiz do repositório mitiga isso validando o formato exato que o jogo envia:</p>
+
+  <ul>
+    <li><code>name</code> — string de 1 a 20 caracteres;</li>
+    <li><code>score</code> — inteiro entre 0 e 2000 (teto folgado sobre o máximo teórico de gameplay, ~1625 no tabuleiro 25×13);</li>
+    <li><code>ts</code> — timestamp;</li>
+    <li>nenhum campo extra, e <strong>sem update/delete público</strong> — só criação e leitura.</li>
+  </ul>
+
+  <p><strong>⚠️ As rules não se aplicam sozinhas</strong> — precisam de deploy manual no projeto Firebase (passo do dono do projeto):</p>
+
+  <ul>
+    <li><strong>Console:</strong> <a href="https://console.firebase.google.com/">Firebase Console</a> → Firestore Database → aba <em>Regras</em> → colar o conteúdo de <code>firestore.rules</code> → <em>Publicar</em>; ou</li>
+    <li><strong>CLI:</strong> <code>firebase deploy --only firestore:rules</code> (com o <a href="https://firebase.google.com/docs/cli">Firebase CLI</a> autenticado e o arquivo referenciado no <code>firebase.json</code>).</li>
+  </ul>
+
+  <p>As rules validam <em>formato</em>, não <em>legitimidade</em>: um script ainda pode enviar um score falso desde que passe na validação. Para reforçar, ative o <a href="https://firebase.google.com/docs/app-check">Firebase App Check</a>, que exige um atestado (ex.: reCAPTCHA) de que a requisição vem do app web real antes de aceitar a escrita.</p>
+
+</details>
+
+<hr />
+
+<details>
   
   <summary><strong>Updates</strong></summary>
   

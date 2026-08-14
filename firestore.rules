@@ -1,0 +1,46 @@
+rules_version = '2';
+
+// Regras de seguranca do ranking (colecao "scores").
+//
+// O cliente (js/leaderboard.js) grava documentos exatamente neste formato:
+//   name  -> string  (nome do jogador, trim + slice(0, 20))
+//   score -> int     (integerValue enviado via REST)
+//   ts    -> timestamp (timestampValue com new Date().toISOString())
+//
+// Teto do score: o tabuleiro tem 25x13 = 325 celulas (js/config.js). Cada
+// comida cresce a cobra em 1 celula; a normal vale +1 e a especial vale +5
+// (SPECIAL_SCORE). Mesmo no cenario impossivel de so comer especiais, o
+// maximo teorico seria ~325 * 5 = 1625. O limite de 2000 da folga para
+// ajustes futuros de gameplay sem aceitar valores absurdos.
+//
+// Deploy: firebase deploy --only firestore:rules (ou pelo console do
+// Firebase). Veja a secao "Ranking e seguranca" no README.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /scores/{scoreId} {
+      // Leitura publica: o jogo consulta o top 20 via runQuery.
+      allow read: if true;
+
+      // Escrita: apenas criacao de documentos no formato exato acima.
+      allow create: if
+        request.resource.data.keys().hasOnly(['name', 'score', 'ts']) &&
+        request.resource.data.keys().hasAll(['name', 'score', 'ts']) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() >= 1 &&
+        request.resource.data.name.size() <= 20 &&
+        request.resource.data.score is int &&
+        request.resource.data.score >= 0 &&
+        request.resource.data.score <= 2000 &&
+        request.resource.data.ts is timestamp;
+
+      // Ninguem edita nem apaga scores pelo cliente.
+      allow update, delete: if false;
+    }
+
+    // Qualquer outra colecao permanece inacessivel.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
