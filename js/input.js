@@ -8,34 +8,37 @@ export function setDirection(dir) {
 }
 
 // Espaco e setas rolariam a pagina durante o jogo.
-const SCROLL_KEYS = [32, 37, 38, 39, 40];
+const SCROLL_KEYS = [" ", "ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"];
 
 function handleKey(event) {
-    if (SCROLL_KEYS.includes(event.keyCode)) event.preventDefault();
+    // Letras chegam minusculas para casar com/sem Shift ou Caps Lock,
+    // como o antigo event.keyCode (deprecated) fazia.
+    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+    if (SCROLL_KEYS.includes(key)) event.preventDefault();
     if (state.showingLeaderboard) {
-        if (event.keyCode === 27 || event.keyCode === 76) closeLeaderboard();
+        if (key === "Escape" || key === "l") closeLeaderboard();
         return;
     }
-    if (event.keyCode === 76) {
+    if (key === "l") {
         openLeaderboard();
         return;
     }
     if (state.isReady) {
-        if (event.keyCode === 13 || event.keyCode === 32) state.isReady = false;
+        if (key === "Enter" || key === " ") state.isReady = false;
         return;
     }
     if (state.isGameOver) {
-        if (event.keyCode === 13 || event.keyCode === 32) resetGame();
+        if (key === "Enter" || key === " ") resetGame();
         return;
     }
-    if (event.keyCode === 32 || event.keyCode === 80) {
+    if (key === " " || key === "p") {
         state.isPaused = !state.isPaused;
         return;
     }
-    if (event.keyCode === 37 || event.keyCode === 65) setDirection("left");
-    if (event.keyCode === 38 || event.keyCode === 87) setDirection("up");
-    if (event.keyCode === 39 || event.keyCode === 68) setDirection("right");
-    if (event.keyCode === 40 || event.keyCode === 83) setDirection("down");
+    if (key === "ArrowLeft" || key === "a") setDirection("left");
+    if (key === "ArrowUp" || key === "w") setDirection("up");
+    if (key === "ArrowRight" || key === "d") setDirection("right");
+    if (key === "ArrowDown" || key === "s") setDirection("down");
 }
 
 function startTouch(e) {
