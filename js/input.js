@@ -7,7 +7,11 @@ export function setDirection(dir) {
     if (dir !== opposite[state.direction]) state.nextDirection = dir;
 }
 
+// Espaco e setas rolariam a pagina durante o jogo.
+const SCROLL_KEYS = [32, 37, 38, 39, 40];
+
 function handleKey(event) {
+    if (SCROLL_KEYS.includes(event.keyCode)) event.preventDefault();
     if (state.showingLeaderboard) {
         if (event.keyCode === 27 || event.keyCode === 76) closeLeaderboard();
         return;
@@ -59,5 +63,7 @@ function moveTouch(e) {
 export function bindInputs() {
     document.addEventListener("keydown", handleKey);
     document.addEventListener("touchstart", startTouch, false);
-    document.addEventListener("touchmove", moveTouch, false);
+    // passive: false — listeners de touchmove em document sao passivos por
+    // padrao no Chrome, o que anularia o preventDefault() do swipe.
+    document.addEventListener("touchmove", moveTouch, { passive: false });
 }

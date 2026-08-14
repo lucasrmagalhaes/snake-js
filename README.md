@@ -9,7 +9,47 @@
   </a>
   <br />
   <i>Nostálgico jogo da cobrinha desenvolvido em JavaScript.</i>
+  <br />
+  <br />
+  <a href="https://lucasrmagalhaes.github.io/snake-js/"><strong>▶ Jogar online</strong></a>
 </p>
+
+<hr />
+
+<details>
+
+  <summary><strong>Como jogar</strong></summary>
+
+  <br />
+
+  <ul>
+    <li><strong>Setas</strong> ou <strong>WASD</strong> — mover a cobrinha;</li>
+    <li><strong>Espaço</strong> ou <strong>Enter</strong> — começar / reiniciar;</li>
+    <li><strong>Espaço</strong> ou <strong>P</strong> — pausar e retomar;</li>
+    <li><strong>L</strong> — abrir/fechar o ranking global; e</li>
+    <li><strong>Swipe</strong> na tela — controles em dispositivos móveis.</li>
+  </ul>
+
+</details>
+
+<hr />
+
+<details>
+
+  <summary><strong>Rodando localmente</strong></summary>
+
+  <br />
+
+  <p>O jogo usa módulos ES, então precisa ser servido via HTTP — abrir o <code>index.html</code> direto do disco (<code>file://</code>) não funciona:</p>
+
+<pre><code>git clone https://github.com/lucasrmagalhaes/snake-js.git
+cd snake-js
+npx serve .
+# ou: python -m http.server 8000</code></pre>
+
+  <p>Depois é só abrir a URL indicada no terminal (ex.: <code>http://localhost:3000</code>).</p>
+
+</details>
 
 <hr />
 
@@ -23,8 +63,8 @@
     <li>Alterado a cor de background;</li>
     <li>Adicionado espaçamento entre os quadrados da cobrinha;</li>
     <li>Fix pelo <a href="https://github.com/roanrobersson">@roanrobersson</a> - Cobrinha deixou de sumir durante teletransporte + keydown; e</li>
-    <li>Feat pelo <a href="https://github.com/Jorgewlf88">@Jorgewlf88</a> - Suporte para dispositivos móveis.
-    <li>Feat pelo <a href="https://github.com/MaurerKrisztian">@MaurerKrisztian</a> - Adicionado configuração de velocidade e pontuação.
+    <li>Feat pelo <a href="https://github.com/Jorgewlf88">@Jorgewlf88</a> - Suporte para dispositivos móveis.</li>
+    <li>Feat pelo <a href="https://github.com/MaurerKrisztian">@MaurerKrisztian</a> - Adicionado configuração de velocidade e pontuação.</li>
     <li>Score real, high score persistido em <code>localStorage</code> e tela de Game Over no canvas (sem <code>alert</code>).</li>
     <li>Tela inicial com instruções, pausa (Space/P) e suporte a WASD além das setas.</li>
     <li>Visual repaginado: cabeça com olhos direcionais, segmentos arredondados, grid sutil, comida com gradiente e pulsação.</li>
@@ -36,6 +76,7 @@
     <li>6 personagens de cobra selecionáveis: <strong>Verdão</strong>, <strong>Coral</strong>, <strong>Jararaca</strong>, <strong>Píton</strong>, <strong>Naja</strong> e <strong>Brasa</strong>.</li>
     <li>Canvas widescreen 25×13 (proporção ~16:9), responsivo em mobile e modo fullscreen.</li>
     <li>Favicon SVG temático.</li>
+    <li>Colisão justa com a cauda, comida nunca nasce sob a cabeça, teclas do jogo não rolam mais a página, swipe corrigido no mobile e cache do PWA com atualização automática.</li>
   </ol>
 
 </details>
@@ -49,8 +90,8 @@
   <br />
   
   <p align="left">
-    Plataforma: <a href="https://web.digitalinnovation.one/home">Digital Innovation One</a> <br /> 
-    Desafio: <a href="https://web.digitalinnovation.one/course/desafio-pratico-recriando-o-jogo-da-cobrinha-com-javascript/learning/66d83831-bae1-45f7-b2ea-af7d64d5d4f5?back=/track/desenvolvedor-front-end-reactjs&bootcamp_id=abf8f19f-691b-4dac-a14a-11ddcf3a14cd">Recriando o Jogo da Cobrinha com JavaScript</a>
+    Plataforma: <a href="https://www.dio.me">Digital Innovation One</a> <br /> 
+    Desafio: Recriando o Jogo da Cobrinha com JavaScript
   </p>
   
 </details>

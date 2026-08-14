@@ -88,29 +88,36 @@ export function tick() {
         else if (snakeY >= boardH) snakeY = 0;
     }
 
+    const now = performance.now();
+    if (state.specialFood && now > state.specialFood.expires) state.specialFood = null;
+
+    const ateNormal = state.food && snakeX === state.food.x && snakeY === state.food.y;
+    const ateSpecial = state.specialFood && snakeX === state.specialFood.x && snakeY === state.specialFood.y;
+    const willGrow = ateNormal || ateSpecial;
+
+    // Quando a cobra nao cresce, a cauda desocupa a celula neste mesmo tick;
+    // mover a cabeca para a celula da cauda nao pode contar como colisao.
+    const lastIndex = state.snake.length - 1;
     for (let i = 0; i < state.snake.length; i++) {
+        if (!willGrow && i === lastIndex) continue;
         if (snakeX === state.snake[i].x && snakeY === state.snake[i].y) {
             gameOver();
             return;
         }
     }
 
-    const now = performance.now();
-    if (state.specialFood && now > state.specialFood.expires) state.specialFood = null;
+    const newHead = { x: snakeX, y: snakeY };
 
-    const ateNormal = snakeX === state.food.x && snakeY === state.food.y;
-    const ateSpecial = state.specialFood && snakeX === state.specialFood.x && snakeY === state.specialFood.y;
-
-    if (!ateNormal && !ateSpecial) {
+    if (!willGrow) {
         state.snake.pop();
     } else {
         if (ateNormal) {
             state.score++;
             state.eatEffect = { x: state.food.x, y: state.food.y, start: now, color: "255, 71, 87" };
-            state.food = spawnFreeCell(state.specialFood ? [state.specialFood] : []);
+            state.food = spawnFreeCell(state.specialFood ? [state.specialFood, newHead] : [newHead]);
             playEat();
             if (!state.specialFood && Math.random() < SPECIAL_CHANCE) {
-                const pos = spawnFreeCell([state.food]);
+                const pos = spawnFreeCell(state.food ? [state.food, newHead] : [newHead]);
                 if (pos) state.specialFood = { x: pos.x, y: pos.y, expires: now + SPECIAL_TTL };
             }
         }
@@ -123,5 +130,5 @@ export function tick() {
         setSpeed(effectiveInterval());
     }
 
-    state.snake.unshift({ x: snakeX, y: snakeY });
+    state.snake.unshift(newHead);
 }

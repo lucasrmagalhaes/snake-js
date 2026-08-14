@@ -1,4 +1,4 @@
-const CACHE = "snake-v2";
+const CACHE = "snake-v3";
 const ASSETS = [
     "./",
     "./index.html",
@@ -34,12 +34,19 @@ self.addEventListener("fetch", e => {
     if (url.origin !== location.origin) return;
     if (e.request.method !== "GET") return;
 
+    // Stale-while-revalidate: responde rapido pelo cache, mas sempre busca a
+    // versao nova em segundo plano — assim novos deploys chegam aos usuarios
+    // sem depender de trocar o nome do cache.
     e.respondWith(
-        caches.match(e.request).then(cached => cached || fetch(e.request).then(resp => {
-            if (!resp || resp.status !== 200 || resp.type !== "basic") return resp;
-            const clone = resp.clone();
-            caches.open(CACHE).then(c => c.put(e.request, clone));
-            return resp;
-        }))
+        caches.match(e.request).then(cached => {
+            const fetchAndUpdate = fetch(e.request).then(resp => {
+                if (resp && resp.status === 200 && resp.type === "basic") {
+                    const clone = resp.clone();
+                    caches.open(CACHE).then(c => c.put(e.request, clone));
+                }
+                return resp;
+            }).catch(() => cached);
+            return cached || fetchAndUpdate;
+        })
     );
 });
