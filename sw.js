@@ -1,4 +1,4 @@
-const CACHE = "snake-v3";
+const CACHE = "snake-v5";
 const ASSETS = [
     "./",
     "./index.html",
@@ -6,6 +6,11 @@ const ASSETS = [
     "./js/main.js",
     "./js/config.js",
     "./js/state.js",
+    "./js/rng.js",
+    "./js/i18n.js",
+    "./js/skin.js",
+    "./js/achievements.js",
+    "./js/replay.js",
     "./js/audio.js",
     "./js/render.js",
     "./js/game.js",
@@ -34,9 +39,8 @@ self.addEventListener("fetch", e => {
     if (url.origin !== location.origin) return;
     if (e.request.method !== "GET") return;
 
-    // Stale-while-revalidate: responde rapido pelo cache, mas sempre busca a
-    // versao nova em segundo plano — assim novos deploys chegam aos usuarios
-    // sem depender de trocar o nome do cache.
+    // Stale-while-revalidate: serve the cached copy, then refresh it in the
+    // background so a new deploy reaches players without a cache rename.
     e.respondWith(
         caches.match(e.request).then(cached => {
             const fetchAndUpdate = fetch(e.request).then(resp => {

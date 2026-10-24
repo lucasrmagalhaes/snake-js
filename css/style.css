@@ -1,132 +1,318 @@
+:root {
+    --bg: #0d0d10;
+    --accent: #3ddc84;
+    --pixel: "Courier New", Courier, ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
 html, body {
-    overscroll-behavior: none;
+    margin: 0;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--accent);
 }
 
 body {
     min-height: 100vh;
-    margin: 0;
-    padding: 12px;
-    box-sizing: border-box;
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-    background: #0d0d10;
-    color: #3ddc84;
+    justify-content: center;
+    padding: 12px;
     font-family: system-ui, sans-serif;
+    overscroll-behavior: none;
 }
 
-h1 {
-    letter-spacing: 4px;
-    margin: 0 0 12px;
-    font-size: clamp(20px, 4vw, 32px);
+#stage {
+    position: relative;
+    width: min(800px, 100%, calc((100vh - 24px) * 800 / 448));
+    user-select: none;
 }
 
 #snake {
     display: block;
     width: 100%;
-    max-width: min(800px, calc((100vh - 160px) * (800 / 448)));
     height: auto;
     border-radius: 12px;
-    box-shadow: 0 0 40px rgba(61, 220, 132, 0.15);
+    background: var(--bg);
+    box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 22%, transparent);
     touch-action: none;
 }
 
-.controls {
+#overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 8px 0 12px;
+    align-items: flex-start;
+    overflow: auto;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(6, 6, 10, 0.78);
 }
 
-.controls label {
+.panel {
+    width: min(460px, 100%);
+    margin: auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    background: rgba(13, 13, 16, 0.92);
+    box-shadow: 0 0 28px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+h1, h2, .pixel, .big-score {
+    font-family: var(--pixel);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+    text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+h1 { font-size: clamp(24px, 5vw, 34px); }
+
+#modeRow button {
+    padding: 4px 8px;
+    font-size: 13px;
+}
+h2 { font-size: clamp(18px, 4vw, 26px); color: #fff; }
+
+.big-score {
+    font-size: clamp(40px, 8vw, 64px);
+    letter-spacing: 0.08em;
+    line-height: 1;
+}
+
+.tagline, .hint, .note, #overDetail {
+    margin: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
+    justify-content: center;
+    width: 100%;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    text-align: left;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+button, select {
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--accent) 75%, #333);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+button:hover, select:hover {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+button.active, button.on {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+    color: #fff;
+    font-weight: 650;
+}
+
+button.primary {
+    width: min(280px, 100%);
+    padding: 10px 16px;
+    font-family: var(--pixel);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #0d0d10;
+    border-color: var(--accent);
+}
+
+button.primary:hover {
+    filter: brightness(1.08);
+}
+
+button:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+button:focus-visible, select:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+select, input[type="range"] {
+    width: 100%;
+    background: #0d0d10;
 }
 
 input[type="range"] {
-    accent-color: #3ddc84;
+    accent-color: var(--accent);
 }
 
-.controls button {
-    background: transparent;
-    color: #3ddc84;
-    border: 1px solid #3ddc84;
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-family: inherit;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.15s;
+#rankList, #achList {
+    width: 100%;
+    max-height: 240px;
+    overflow: auto;
 }
 
-.controls button:hover {
-    background: rgba(61, 220, 132, 0.12);
+.rank-row, .ach {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 5px 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-family: var(--pixel);
+    font-size: 13px;
+    letter-spacing: 0;
+    text-transform: none;
+    text-shadow: none;
+    color: rgba(255, 255, 255, 0.88);
 }
 
-.controls button.on {
-    background: rgba(255, 71, 87, 0.15);
-    border-color: #ff4757;
-    color: #ff7b86;
+.rank-row.me { color: var(--accent); }
+
+.ach {
+    opacity: 0.45;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
 }
 
-.controls button.muted {
-    color: #888;
-    border-color: #555;
+.ach.got { opacity: 1; }
+
+.ach span {
+    color: rgba(255, 255, 255, 0.7);
+    font-family: system-ui, sans-serif;
+    font-size: 12px;
 }
 
-.controls button.muted:hover {
-    background: rgba(136, 136, 136, 0.12);
+#pauseBtn {
+    position: absolute;
+    z-index: 2;
+    top: 4px;
+    right: 6px;
+    min-width: 36px;
+    padding: 2px 8px;
+    background: rgba(13, 13, 16, 0.72);
 }
 
-.controls.diff button.active {
-    background: rgba(61, 220, 132, 0.22);
+#toast {
+    position: absolute;
+    z-index: 4;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    background: rgba(0, 0, 0, 0.82);
     color: #fff;
-    font-weight: 600;
+    font-family: var(--pixel);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-align: center;
+    pointer-events: none;
 }
 
-.controls select {
-    background: #0d0d10;
-    color: #3ddc84;
-    border: 1px solid #3ddc84;
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-family: inherit;
-    font-size: 14px;
-    cursor: pointer;
+#dpad {
+    position: absolute;
+    z-index: 2;
+    right: 8px;
+    bottom: 8px;
+    width: 132px;
+    height: 132px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 4px;
+    touch-action: none;
 }
 
-.controls select:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(61, 220, 132, 0.25);
-}
-
-.controls.diff {
-    margin-bottom: 4px;
-}
-
-:fullscreen {
-    background: #0d0d10;
+#dpad button {
+    background: rgba(13, 13, 16, 0.55);
+    font-size: 16px;
     padding: 0;
-    margin: 0;
+}
+
+#dpad button[data-dir="up"] { grid-area: 1 / 2; }
+#dpad button[data-dir="left"] { grid-area: 2 / 1; }
+#dpad button[data-dir="down"] { grid-area: 3 / 2; }
+#dpad button[data-dir="right"] { grid-area: 2 / 3; }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
     overflow: hidden;
-    min-height: 100vh;
-    height: 100vh;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-:fullscreen h1,
-:fullscreen .controls {
-    display: none;
+html:fullscreen,
+html:-webkit-full-screen {
+    background: var(--bg);
 }
 
-:fullscreen #snake {
-    width: auto;
-    height: 100vh;
-    max-width: 100vw;
-    max-height: 100vh;
-    box-shadow: none;
+html:fullscreen body,
+html:-webkit-full-screen body {
+    padding: 0;
+    height: 100%;
+}
+
+html:fullscreen #stage,
+html:-webkit-full-screen #stage {
+    width: min(100vw, calc(100vh * 800 / 448));
+}
+
+html:fullscreen #snake,
+html:-webkit-full-screen #snake {
     border-radius: 0;
+    box-shadow: none;
+}
+
+@media (max-height: 520px) {
+    #dpad {
+        width: 104px;
+        height: 104px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Snake Game",
   "short_name": "Snake",
-  "description": "Jogo da cobrinha em JavaScript com ranking global",
+  "description": "Snake with modes, power-ups, a daily challenge and local two-player",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
