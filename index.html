@@ -6,6 +6,7 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0d0d10">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="favicon.svg">
@@ -14,29 +15,107 @@
     <title>Snake Game</title>
 </head>
 <body>
-    <h1>SNAKE GAME!</h1>
-    <div class="controls diff">
-        <button id="diff_easy" type="button">Easy</button>
-        <button id="diff_normal" type="button">Normal</button>
-        <button id="diff_hard" type="button">Hard</button>
+    <div id="stage">
+        <canvas id="snake" width="800" height="448"></canvas>
+        <button id="pauseBtn" type="button" data-i18n-aria="pause" hidden>II</button>
+        <p id="status" class="sr-only" aria-live="polite"></p>
+        <div id="toast" hidden></div>
+        <div id="overlay">
+            <section class="panel" data-panel="start">
+                <h1 class="pixel" data-i18n="title">SNAKE</h1>
+                <p class="tagline" data-i18n="tagline"></p>
+                <div class="row" id="modeRow"></div>
+                <button id="twoPlayerBtn" type="button"></button>
+                <p id="dailyNote" class="note" hidden></p>
+                <button id="startBtn" class="primary" type="button" data-i18n="start">Start</button>
+                <div class="row diff">
+                    <button id="diff_easy" type="button" data-i18n="easy">Easy</button>
+                    <button id="diff_normal" type="button" data-i18n="normal">Normal</button>
+                    <button id="diff_hard" type="button" data-i18n="hard">Hard</button>
+                </div>
+                <label class="field">
+                    <span data-i18n="skin">Skin</span>
+                    <select id="snakeSelect"></select>
+                </label>
+                <label class="field">
+                    <span data-i18n="speed">Speed</span>
+                    <input id="speed" min="30" max="230" type="range" step="10" value="130">
+                </label>
+                <div class="row">
+                    <button id="wallToggle" type="button"></button>
+                    <button id="muteToggle" type="button"></button>
+                    <button id="dpadToggle" type="button"></button>
+                    <button id="vibrateToggle" type="button"></button>
+                    <button id="langToggle" type="button">PT</button>
+                </div>
+                <div class="row">
+                    <button id="lbBtn" type="button" data-i18n="ranking">Ranking</button>
+                    <button id="achBtn" type="button" data-i18n="achievements">Achievements</button>
+                    <button id="fsToggle" type="button" data-i18n="fullscreen">Fullscreen</button>
+                    <button id="replayBestBtn" type="button" data-i18n="replayBest">Replay best</button>
+                </div>
+                <p class="hint" data-i18n="hints"></p>
+                <p class="hint" data-i18n="powerHint"></p>
+            </section>
+
+            <section class="panel" data-panel="pause" hidden>
+                <h2 data-i18n="paused">Paused</h2>
+                <button id="resumeBtn" class="primary" type="button" data-i18n="resume">Resume</button>
+                <label class="field">
+                    <span data-i18n="skin">Skin</span>
+                    <select id="pauseSnake"></select>
+                </label>
+                <div class="row">
+                    <button id="pauseMute" type="button"></button>
+                    <button id="pauseDpad" type="button"></button>
+                    <button id="pauseVibrate" type="button"></button>
+                    <button id="pauseLang" type="button">PT</button>
+                </div>
+                <div class="row">
+                    <button id="pauseRestart" type="button" data-i18n="restart">Restart</button>
+                    <button id="pauseQuit" type="button" data-i18n="menu">Menu</button>
+                    <button id="pauseRank" type="button" data-i18n="ranking">Ranking</button>
+                    <button id="pauseAch" type="button" data-i18n="achievements">Achievements</button>
+                    <button id="pauseFs" type="button" data-i18n="fullscreen">Fullscreen</button>
+                </div>
+            </section>
+
+            <section class="panel" data-panel="over" hidden>
+                <h2 id="overTitle">Game over</h2>
+                <p id="overScore" class="big-score">0</p>
+                <p id="overDetail"></p>
+                <button id="overRestart" class="primary" type="button" data-i18n="restart">Restart</button>
+                <div class="row">
+                    <button id="overMenu" type="button" data-i18n="menu">Menu</button>
+                    <button id="shareBtn" type="button" data-i18n="share">Share</button>
+                    <button id="replayRunBtn" type="button" data-i18n="replayRun">Replay run</button>
+                    <button id="overReplayBest" type="button" data-i18n="replayBest">Replay best</button>
+                </div>
+            </section>
+
+            <section class="panel" data-panel="rank" hidden>
+                <h2 data-i18n="ranking">Ranking</h2>
+                <div class="row">
+                    <button id="tabGlobal" type="button" data-i18n="rankGlobal">Global</button>
+                    <button id="tabDaily" type="button" data-i18n="rankDaily">Daily</button>
+                </div>
+                <div id="rankList"></div>
+                <p class="hint" data-i18n="closeHint"></p>
+                <button id="rankBack" type="button" data-i18n="back">Back</button>
+            </section>
+
+            <section class="panel" data-panel="ach" hidden>
+                <h2 data-i18n="achievements">Achievements</h2>
+                <div id="achList"></div>
+                <button id="achBack" class="primary" type="button" data-i18n="back">Back</button>
+            </section>
+        </div>
+        <div id="dpad" hidden>
+            <button type="button" data-dir="up" data-i18n-aria="up" tabindex="-1">&#9650;</button>
+            <button type="button" data-dir="left" data-i18n-aria="left" tabindex="-1">&#9664;</button>
+            <button type="button" data-dir="down" data-i18n-aria="down" tabindex="-1">&#9660;</button>
+            <button type="button" data-dir="right" data-i18n-aria="right" tabindex="-1">&#9654;</button>
+        </div>
     </div>
-    <div class="controls">
-        <label>snake:
-            <select id="snakeSelect">
-                <option value="verdao">Verdão</option>
-                <option value="coral">Coral</option>
-                <option value="jararaca">Jararaca</option>
-                <option value="piton">Píton</option>
-                <option value="naja">Naja</option>
-                <option value="brasa">Brasa</option>
-            </select>
-        </label>
-        <label>speed: <input id="speed" min="30" max="230" type="range" step="10" value="130"></label>
-        <button id="wallToggle" type="button">Walls: OFF</button>
-        <button id="muteToggle" type="button">Sound: ON</button>
-        <button id="fsToggle" type="button">Fullscreen</button>
-        <button id="lbBtn" type="button">Ranking</button>
-    </div>
-    <canvas id="snake" width="800" height="448"></canvas>
 </body>
 </html>

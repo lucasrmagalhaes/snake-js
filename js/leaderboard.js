@@ -1,12 +1,13 @@
-import { state } from "./state.js";
+import { state, hooks } from "./state.js";
 import { FIREBASE_PROJECT, FIREBASE_API_KEY } from "./config.js";
+import { t } from "./i18n.js";
 
 export function leaderboardConfigured() {
     return Boolean(FIREBASE_PROJECT && FIREBASE_API_KEY);
 }
 
 export function promptForName() {
-    const name = prompt("Seu nome para o ranking:", state.playerName || "");
+    const name = prompt(t("namePrompt"), state.playerName || "");
     if (name && name.trim()) {
         state.playerName = name.trim().slice(0, 20);
         localStorage.setItem("snakePlayerName", state.playerName);
@@ -31,12 +32,17 @@ export async function submitScore(scoreVal) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
-    } catch (e) {}
+    } catch (err) {}
 }
 
 export async function fetchLeaderboard() {
-    if (!leaderboardConfigured()) return;
+    if (!leaderboardConfigured()) {
+        state.leaderboardData = "unconfigured";
+        hooks.sync();
+        return;
+    }
     state.leaderboardData = "loading";
+    hooks.sync();
     const url = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents:runQuery?key=${FIREBASE_API_KEY}`;
     const body = {
         structuredQuery: {
@@ -46,33 +52,24 @@ export async function fetchLeaderboard() {
         }
     };
     try {
-        const r = await fetch(url, {
+        const response = await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
-        const data = await r.json();
-        state.leaderboardData = data
-            .filter(d => d.document)
-            .map(d => ({
-                name: d.document.fields.name?.stringValue || "—",
-                score: parseInt(d.document.fields.score?.integerValue) || 0
-            }));
-    } catch (e) {
+        const data = await response.json();
+        if (!response.ok || !Array.isArray(data)) {
+            state.leaderboardData = "error";
+        } else {
+            state.leaderboardData = data
+                .filter(row => row.document)
+                .map(row => ({
+                    name: row.document.fields.name?.stringValue || "-",
+                    score: parseInt(row.document.fields.score?.integerValue, 10) || 0
+                }));
+        }
+    } catch (err) {
         state.leaderboardData = "error";
     }
-}
-
-export function openLeaderboard() {
-    if (!leaderboardConfigured()) {
-        alert("Ranking nao configurado.\nDefina FIREBASE_PROJECT e FIREBASE_API_KEY em js/config.js.");
-        return;
-    }
-    state.showingLeaderboard = true;
-    fetchLeaderboard();
-    document.getElementById("lbBtn")?.blur();
-}
-
-export function closeLeaderboard() {
-    state.showingLeaderboard = false;
+    hooks.sync();
 }
